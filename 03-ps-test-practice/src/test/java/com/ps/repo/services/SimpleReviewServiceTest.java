@@ -25,11 +25,11 @@ public class SimpleReviewServiceTest {
 
     private ReviewRepo reviewMockRepo = mock(ReviewRepo.class);
 
-    private SimpleReviewService  simpleReviewService;
+    private SimpleReviewService simpleReviewService;
 
 
     @Before
-    public void setUp(){
+    public void setUp() {
         simpleReviewService = new SimpleReviewService();
         simpleReviewService.setRepo(reviewMockRepo);
     }
@@ -56,7 +56,9 @@ public class SimpleReviewServiceTest {
         Set<Review> reviewSet = new HashSet<>();
         reviewSet.add(review);
 
-        //TODO 17. Define the mock behavoiur using Mockito methods
+        //TODO 17. Define the mock behavoiur using Mockito methods. Done.
+        when(reviewMockRepo.findAllForUser(user)).thenReturn(reviewSet);
+
         Set<Review> result = simpleReviewService.findAllByUser(user);
         verify(reviewMockRepo, times(1)).findAllForUser(user);
         assertEquals(result.size(), 1);

@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 /**
  * Created by iuliana.cosmina on 6/2/16.
  */
-//TODO 21. Declare this class as an aspect
+//TODO 21. Declare this class as an aspect. Done.
+@Aspect
 public class UserRepoMonitor {
 
     private static final Logger logger = Logger.getLogger(UserRepoMonitor.class);
@@ -33,7 +34,7 @@ public class UserRepoMonitor {
     public void afterServiceUpdate(JoinPoint joinPoint, int result) throws Throwable {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
-        if(result == 0) {
+        if (result == 0) {
             logger.info(" ---> Update method " + className + "." + methodName + " performed as expected.");
         }
     }
@@ -43,7 +44,7 @@ public class UserRepoMonitor {
     public void afterBadUpdate(JoinPoint joinPoint, Exception e) throws Throwable {
         String className = joinPoint.getSignature().getDeclaringTypeName();
         String methodName = joinPoint.getSignature().getName();
-        if(e instanceof DuplicateKeyException) {
+        if (e instanceof DuplicateKeyException) {
             logger.info(" ---> Update method " + className + "." + methodName + " failed. Existing username found.");
         } else {
             throw new UnexpectedException(" Ooops!", e);

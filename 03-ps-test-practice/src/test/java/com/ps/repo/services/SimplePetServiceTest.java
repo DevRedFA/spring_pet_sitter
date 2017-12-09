@@ -56,23 +56,27 @@ public class SimplePetServiceTest {
         Pet pet = simplePetService.findById(PET_ID);
         assertNull(pet);
     }
-    @Test
+
+    @Test(expected = NotFoundException.class)
     public void deleteByIdNegative() {
-        //TODO 14. Analyse the stub implementation and add a test for  simplePetService.deleteById(99L)
+        //TODO 14. Analyse the stub implementation and add a test for  simplePetService.deleteById(99L). Done.
         simplePetService.deleteById(99L);
     }
 
     //positive test, we know that pets for this owner exist and how many
     @Test
     public void findByOwnerPositive() {
-        //TODO 15. Analyse the stub implementation and add a test for simplePetService.findAllByOwner(owner)
+        //TODO 15. Analyse the stub implementation and add a test for simplePetService.findAllByOwner(owner). Done.
+        Set<Pet> result = simplePetService.findAllByOwner(owner);
+        assertEquals(result.size(), 2);
+
     }
 
     //negative test, we know that pets for this owner do not exist
     @Test
     public void findByOwnerNegative() {
         User newOwner = buildUser("gigi@gmail.com", "1!2#tre", UserType.OWNER);
-        Set<Pet> result =  simplePetService.findAllByOwner(newOwner);
+        Set<Pet> result = simplePetService.findAllByOwner(newOwner);
         assertEquals(result.size(), 0);
     }
 }

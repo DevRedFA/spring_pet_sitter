@@ -12,21 +12,22 @@
     <bean id="simpleBean1" class="com.ps.sample.SimpleBean"/>
     <bean id="simpleBean2" class="com.ps.sample.SimpleBean"/>
 
-    <!-- TODO 9. Add the necessary attributes to set init and destroy methods for this bean-->
+    <!-- TODO 9. Add the necessary attributes to set init and destroy methods for this bean. Done.-->
     <bean id="complexBean" class="com.ps.sample.ComplexBean"
+          init-method="initMethod"
+          destroy-method="destroyMethod"
           c:_0-ref="simpleBean1"
           p:simpleBean2-ref="simpleBean2"/>
 
     <bean id="complexBean2" class="com.ps.sample.ComplexBean"
           p:simpleBean2-ref="simpleBean2">
         <constructor-arg>
-          <util:constant static-field="com.ps.sample.SimpleBean.DEFAULT_SIMPLE_BEAN"/>
-<!--            <bean id="com.ps.sample.SimpleBean.DEFAULT_SIMPLE_BEAN"
-                  class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean" />-->
+            <util:constant static-field="com.ps.sample.SimpleBean.DEFAULT_SIMPLE_BEAN"/>
+            <!--            <bean id="com.ps.sample.SimpleBean.DEFAULT_SIMPLE_BEAN"
+                              class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean" />-->
 
         </constructor-arg>
     </bean>
-
 
 
 </beans>
