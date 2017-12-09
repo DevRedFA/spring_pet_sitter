@@ -4,6 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- TODO 5. Split this file in multiple configuration files. Done.-->
     <bean id="mtBean" class="com.ps.beans.others.MultipleTypesBean">
         <property name="noOne" value="1"/>
         <property name="noTwo" value="2"/>
@@ -61,16 +62,8 @@
     </bean>
 
 
-    <bean id="simpleSingleton" class="com.ps.beans.others.SimpleSingleton"
-          factory-method="getInstance" />
+    <import resource="sample-config-1-splitted.xml"/>
 
-    <bean id="simpleFm" class="com.ps.beans.others.SimpleFactoryMethod"
-          factory-method="getSimpleBean" />
 
-    <bean id="simpleBeanFactory" class="com.ps.beans.others.SimpleFactoryBean"/>
-    <bean id="simpleFB" factory-bean="simpleBeanFactory"
-          factory-method="getSimpleBean" />
-
-    <bean id="smartBean" class="com.ps.beans.others.SpringFactoryBean"/>
 
 </beans>
