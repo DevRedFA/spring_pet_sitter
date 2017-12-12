@@ -52,7 +52,9 @@ public class HibernateUserRepo implements UserRepo {
     @Override
     public List<User> findAllByUserName(String username, boolean exactMatch) {
         if (exactMatch) {
-            return new ArrayList<>();  // TODO 36. Add Hibernate query to extract wll users with username = :username
+            // TODO 36. Add Hibernate query to extract wll users with username = :username. Done.
+            return session().createQuery("from User u where username like ?")
+                    .setParameter(0, username).list();
         } else {
             return session().createQuery("from User u where username like ?")
                     .setParameter(0, "%" + username + "%").list();
@@ -67,7 +69,8 @@ public class HibernateUserRepo implements UserRepo {
 
     @Override
     public long countUsers() {
-        return 0L; // TODO 37. Add query to count all users
+        // TODO 37. Add query to count all users. Done.
+        return (long) session().createQuery("select count(u) from User u").uniqueResult();
     }
 
     @Override
@@ -88,7 +91,10 @@ public class HibernateUserRepo implements UserRepo {
 
     @Override
     public void deleteById(Long userId) {
-        // TODO 38. Add code to delete an user by its id.
+        // TODO 38. Add code to delete an user by its id. Done.
+        User user = (User) session().createQuery("from User u where u.id= :id").
+                setParameter("id", userId).uniqueResult();
+        session().delete(user);
     }
 
     @Override

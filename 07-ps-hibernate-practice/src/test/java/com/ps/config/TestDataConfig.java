@@ -3,6 +3,7 @@ package com.ps.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -80,7 +81,11 @@ public class TestDataConfig {
 
     @Bean
     public SessionFactory sessionFactory() {
-        return null; // TODO 39. Add appropriate declaration of SessionFactory bean
+        // TODO 39. Add appropriate declaration of SessionFactory bean. Done.
+        return new LocalSessionFactoryBuilder(dataSource())
+                .scanPackages("com.ps.ents")
+                .addProperties(hibernateProperties())
+                .buildSessionFactory();
     }
 
     @Bean
