@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by iuliana.cosmina on 7/15/16.
  */
 @Service
-//TODO 33. Make all methods required to be executed in a read only transaction.
+//TODO 33. Make all methods required to be executed in a read only transaction. Done.
+@Transactional(readOnly = true, propagation = Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
 
     private UserRepo userRepo;
@@ -41,8 +42,9 @@ public class UserServiceImpl implements UserService {
     }
 
     // TODO 34. Make this method execute in a read-write transaction and declare the
-    // transaction to rollback in case a MailSendingException exception is used
+    // transaction to rollback in case a MailSendingException exception is used. Done.
     @Override
+    @Transactional(rollbackFor = MailSendingException.class)
     public int updatePassword(Long userId, String newPass) throws MailSendingException {
         User u = userRepo.findById(userId);
         String email = u.getEmail();
