@@ -5,6 +5,7 @@ import com.ps.repos.UserRepo;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,8 @@ public class JpaUserRepo implements UserRepo {
 
     private EntityManager entityManager;
 
-    //TODO 42. Annotate this method with the proper annotation to make the repository class pass tests in TestJpaUserRepo
+    //TODO 42. Annotate this method with the proper annotation to make the repository class pass tests in TestJpaUserRepo. Done.
+    @PersistenceContext
     void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

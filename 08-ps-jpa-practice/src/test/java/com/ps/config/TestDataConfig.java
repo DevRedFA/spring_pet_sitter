@@ -21,6 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.transaction.TransactionManager;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -83,19 +84,25 @@ public class TestDataConfig {
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory(){
-        LocalContainerEntityManagerFactoryBean factoryBean = null;
-        //TODO 40. Set all the properties necessary to successfully create an entityManagerFactory bean
+    public EntityManagerFactory entityManagerFactory() {
+        //TODO 40. Set all the properties necessary to successfully create an entityManagerFactory bean. Done.
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setPackagesToScan("com.ps.ents");
+        factoryBean.setDataSource(dataSource());
+        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        factoryBean.setJpaProperties(hibernateProperties());
+        factoryBean.afterPropertiesSet();
         return factoryBean.getNativeEntityManagerFactory();
     }
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-        return null; //TODO 41. Create an appropriate transaction manager bean
+        //TODO 41. Create an appropriate transaction manager bean. Done.
+        return new JpaTransactionManager(entityManagerFactory());
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
