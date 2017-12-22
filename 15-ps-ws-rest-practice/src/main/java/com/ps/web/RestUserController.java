@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Created by iuliana.cosmina on 10/16/16.
  */
-//TODO 55. Place proper annotation here, to make this class handle REST requests
+//TODO 55. Place proper annotation here, to make this class handle REST requests. Done.
+@RestController
 public class RestUserController {
 
     @Autowired
@@ -31,7 +32,9 @@ public class RestUserController {
         return userService.findAll();
     }
 
-   //TODO 56. Place proper annotations to handle a REST POST request
+    //TODO 56. Place proper annotations to handle a REST POST request. Done.
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public void create(@RequestBody @Valid User newUser, @Value("#{request.requestURL}")
             StringBuffer originalUrl, HttpServletResponse response) throws UserException {
         if (newUser.getId() != null) {
@@ -61,9 +64,8 @@ public class RestUserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/users/{$username}"/*, method = TODO 57. Choose the proper HTTP method type to
-        resolve a HTTP REST PUT request  */
-            , produces = MediaType.APPLICATION_JSON_VALUE)
+    /*, method = TODO 57. Choose the proper HTTP method type to resolve a HTTP REST PUT request. Done  */
+    @RequestMapping(value = "/users/{$username}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public User update(@PathVariable("$username") String username, @RequestBody User newUser) throws UserException {
         User user = userService.findByUsername(username);
         if (user == null) {
@@ -79,7 +81,7 @@ public class RestUserController {
     @RequestMapping(value = "/users/{$username}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("$username") String username) throws UserException {
         User user = userService.findByUsername(username);
-        if (user == null ) {
+        if (user == null) {
             throw new UserException("No user found for username " + username);
         }
         userService.deleteById(user.getId());
@@ -105,7 +107,7 @@ public class RestUserController {
         return result;
     }
 
-   /* *//**
+    /* *//**
      * Maps IllegalArgumentExceptions to a 404 Not Found HTTP status code.
      *//*
     @ResponseStatus(HttpStatus.NOT_FOUND)

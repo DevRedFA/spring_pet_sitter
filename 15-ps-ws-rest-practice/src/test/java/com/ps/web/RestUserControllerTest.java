@@ -51,9 +51,8 @@ public class RestUserControllerTest {
     //Test GET by username
     @Test
     public void findByUsername() {
-        User user = null;
-        //TODO 58. Use the proper RestTemplate method to retrieve a user resource with username="johncusack"
-
+        //TODO 58. Use the proper RestTemplate method to retrieve a user resource with username="johncusack". Done.
+        User user = restTemplate.getForObject(GET_PUT_DEL_URL, User.class, "johncusack");
         assertNotNull(user);
         assertEquals("John.Cusack@pet.com", user.getEmail());
         assertEquals(UserType.OWNER, user.getUserType());
@@ -77,7 +76,7 @@ public class RestUserControllerTest {
         user.setActive(true);
         user.setPassword("what");
         user.setUserType(UserType.ADMIN);
-       //TODO 59. Use the proper RestTemplate method to save the user resource created previously
+        //TODO 59. Use the proper RestTemplate method to save the user resource created previously
 
         // test insertion
         User newUser = restTemplate.getForObject(GET_PUT_DEL_URL, User.class, "doctorwho");
@@ -100,7 +99,7 @@ public class RestUserControllerTest {
         user.setUserType(UserType.ADMIN);
 
         User editedUser = null;
-       //TODO 60. Use the proper RestTemplate method to update the user resource with username= "jessicajones"
+        //TODO 60. Use the proper RestTemplate method to update the user resource with username= "jessicajones"
         // and retrieve the result in the userEdit object
         assertNotNull(editedUser);
         assertEquals("MissJones@pet.com", editedUser.getEmail());
